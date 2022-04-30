@@ -60,12 +60,23 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", NULL };
+/* static const char *termcmd[]  = { "st", NULL }; */
+static const char *termcmd[]        = { "qterminal", NULL };
+static const char *brightupcmd[]    = { "intel_backlight", "incr", NULL };
+static const char *brightdowncmd[]  = { "intel_backlight", "decr", NULL };
+static const char *volumemutecmd[]  = { "mixer", "vol",   "0", NULL };
+static const char *volumeupcmd[]    = { "mixer", "vol", "+10", NULL };
+static const char *volumedowncmd[]  = { "mixer", "vol", "-10", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_F1,     spawn,          {.v = volumemutecmd } },
+	{ MODKEY,                       XK_F2,     spawn,          {.v = volumedowncmd } },
+	{ MODKEY,                       XK_F3,     spawn,          {.v = volumeupcmd } },
+	{ MODKEY,                       XK_F5,     spawn,          {.v = brightdowncmd } },
+	{ MODKEY,                       XK_F6,     spawn,          {.v = brightupcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
