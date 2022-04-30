@@ -82,6 +82,9 @@ static const char *volumedowncmd[]  = { "mixer", "vol", "-10", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ Mod4Mask,                     XK_space,  spawn,          {.v = dmenucmd } },
+	{ Mod4Mask,                     XK_Tab,    zoom2,          {.i = +1} },
+	{ Mod4Mask|ShiftMask,           XK_Tab,    zoom2,          {.i = -1} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = emacscmd } },
 	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = browsercmd } },
