@@ -62,6 +62,8 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 /* static const char *termcmd[]  = { "st", NULL }; */
 static const char *termcmd[]        = { "qterminal", NULL };
+static const char *emacscmd[]       = { "emacs", NULL };
+static const char *browsercmd[]     = { "chrome", NULL };
 static const char *brightupcmd[]    = { "intel_backlight", "incr", NULL };
 static const char *brightdowncmd[]  = { "intel_backlight", "decr", NULL };
 static const char *volumemutecmd[]  = { "mixer", "vol",   "0", NULL };
@@ -72,6 +74,8 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = emacscmd } },
+	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_F1,     spawn,          {.v = volumemutecmd } },
 	{ MODKEY,                       XK_F2,     spawn,          {.v = volumedowncmd } },
 	{ MODKEY,                       XK_F3,     spawn,          {.v = volumeupcmd } },
