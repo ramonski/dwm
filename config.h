@@ -44,7 +44,9 @@ static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
+#include <X11/XF86keysym.h>
 #include "fibonacci.c"
+
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
@@ -97,6 +99,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F3,     spawn,          SHCMD("mixer vol +10") },
 	{ MODKEY,                       XK_F5,     spawn,          {.v = brightdowncmd } },
 	{ MODKEY,                       XK_F6,     spawn,          {.v = brightupcmd } },
+
+	{ 0,                  XF86XK_Keyboard,     spawn,          SHCMD("qterminal") },
+	{ 0,                  XF86XK_Display,      spawn,          SHCMD("qterminal") },
+
+
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
