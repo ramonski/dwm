@@ -94,15 +94,27 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = emacscmd } },
 	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = browsercmd } },
 	{ MODKEY|ShiftMask,             XK_m,      spawn,          {.v = mailcmd } },
-	{ MODKEY,                       XK_F1,     spawn,          SHCMD("mixer vol 0") },
-	{ MODKEY,                       XK_F2,     spawn,          SHCMD("mixer vol -10") },
-	{ MODKEY,                       XK_F3,     spawn,          SHCMD("mixer vol +10") },
-	{ MODKEY,                       XK_F5,     spawn,          {.v = brightdowncmd } },
-	{ MODKEY,                       XK_F6,     spawn,          {.v = brightupcmd } },
+	{ MODKEY,                       XK_F1,     spawn,          SHCMD("mixer vol   0; kill -39 $(pidof dwmblocks)") },
+	{ MODKEY,                       XK_F2,     spawn,          SHCMD("mixer vol -10; kill -39 $(pidof dwmblocks)") },
+	{ MODKEY,                       XK_F3,     spawn,          SHCMD("mixer vol +10; kill -39 $(pidof dwmblocks)") },
+	{ MODKEY,                       XK_F5,     spawn,          SHCMD("intel_backlight decr; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY,                       XK_F6,     spawn,          SHCMD("intel_backlight incr; kill -44 $(pidof dwmblocks)") },
 
-	{ 0,                  XF86XK_Keyboard,     spawn,          SHCMD("qterminal") },
-	{ 0,                  XF86XK_Display,      spawn,          SHCMD("qterminal") },
+	/* FN Keys */
+	{ 0, XF86XK_AudioMute,	                   spawn,	        SHCMD("mixer vol 0; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,              spawn,           SHCMD("mixer vol +10; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,              spawn,           SHCMD("mixer vol -10; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_MonBrightnessUp,               spawn,           SHCMD("intel_backlight incr; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_MonBrightnessDown,             spawn,           SHCMD("intel_backlight decr; kill -44 $(pidof dwmblocks)") },
 
+	// Not working
+	{ 0, XF86XK_Keyboard,                      spawn,           SHCMD("notify-send 'FN KEY'") },
+	{ 0, XF86XK_Display,                       spawn,           SHCMD("notify-send 'FN KEY'") },
+	{ 0, XF86XK_WLAN,                          spawn,           SHCMD("notify-send 'FN KEY'") },
+	{ 0, XF86XK_Bluetooth,                     spawn,           SHCMD("notify-send 'FN KEY'") },
+	{ 0, XF86XK_AudioMicMute,                  spawn,           SHCMD("notify-send 'FN KEY'") },
+	{ 0, XF86XK_Favorites,                     spawn,           SHCMD("notify-send 'FN KEY'") },
+	{ 0, XF86XK_Launch1,                       spawn,           SHCMD("notify-send 'FN KEY'") },
 
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -130,7 +142,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
+	/* { MODKEY,                       XK_space,  setlayout,      {0} }, */
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
