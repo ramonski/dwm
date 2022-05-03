@@ -261,6 +261,9 @@ static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
 static void zoom2(const Arg *arg);
 
+static void sighup(int unused);
+static void sigterm(int unused);
+
 /* variables */
 static const char autostartblocksh[] = "autostart_blocking.sh";
 static const char autostartsh[] = "autostart.sh";

@@ -59,6 +59,3 @@ void drw_pic(Drw *drw, int x, int y, unsigned int w, unsigned int h, Picture pic
 
 /* Map functions */
 void drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h);
-
-static void sighup(int unused);
-static void sigterm(int unused);
