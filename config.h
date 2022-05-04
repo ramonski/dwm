@@ -55,7 +55,8 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
 	{ "[@]",      spiral },
 	{ "[\\]",     dwindle },
-	{ "H[]",      deck },
+	{ "[H]",      deck },
+	{ "|M|",      centeredmaster },
 
 	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
@@ -63,7 +64,6 @@ static const Layout layouts[] = {
 	{ "###",      nrowgrid },
 	{ "---",      horizgrid },
 	{ ":::",      gaplessgrid },
-	{ "|M|",      centeredmaster },
 	{ ">M>",      centeredfloatingmaster },
 	{ NULL,       NULL },
 };
@@ -159,8 +159,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
-	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
-	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[5]} },
+	{ MODKEY|ControlMask,           XK_r,      setlayout,      {.v = &layouts[4]} },
+	{ MODKEY|ControlMask,           XK_t,      setlayout,      {.v = &layouts[5]} },
+	{ MODKEY|ControlMask,           XK_m,      setlayout,      {.v = &layouts[6]} },
 	{ MODKEY|ControlMask,		    XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 
