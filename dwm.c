@@ -252,6 +252,7 @@ static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
 static void zoom2(const Arg *arg);
+static void aspectresize(const Arg *arg);
 
 static void sighup(int unused);
 static void sigterm(int unused);
@@ -2505,6 +2506,33 @@ zoom2(const Arg *arg)
 	if (c) {
 		pop(c);
 	}
+}
+
+
+void
+aspectresize(const Arg *arg) {
+	/* https://dwm.suckless.org/patches/aspectresize */
+
+	/* only floating windows can be moved */
+	Client *c;
+	c = selmon->sel;
+	float ratio;
+	int w, h,nw, nh;
+
+	if (!c || !arg)
+		return;
+	if (selmon->lt[selmon->sellt]->arrange && !c->isfloating)
+		return;
+
+	ratio = (float)c->w / (float)c->h;
+	h = arg->i;
+	w = (int)(ratio * h);
+
+	nw = c->w + w;
+	nh = c->h + h;
+
+	XRaiseWindow(dpy, c->win);
+	resize(c, c->x, c->y, nw, nh, True);
 }
 
 int
