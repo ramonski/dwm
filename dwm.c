@@ -1789,8 +1789,9 @@ rotatestack(const Arg *arg)
 	if (c){
 		arrange(selmon);
 		//unfocus(f, 1);
-		focus(f);
+		// focus(f);
 		restack(selmon);
+		focus(c);
 	}
 }
 
