@@ -175,7 +175,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|ControlMask,           XK_r,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY|ControlMask,           XK_t,      setlayout,      {.v = &layouts[5]} },
-	{ MODKEY|ControlMask,           XK_m,      setlayout,      {.v = &layouts[6]} },
+	/* gapless grid */
+	{ MODKEY|ControlMask,           XK_m,      setlayout,      {.v = &layouts[12]} },
 	{ MODKEY|ControlMask,		    XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 
