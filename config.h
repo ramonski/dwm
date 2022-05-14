@@ -165,7 +165,7 @@ static Key keys[] = {
 
 
 	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
+	/* { MODKEY,                       XK_Tab,    view,           {0} }, */
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 
 	/* Layouts */
