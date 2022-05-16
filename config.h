@@ -30,6 +30,21 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
+typedef struct {
+	const char *name;
+	const void *cmd;
+} Sp;
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "lf", NULL };
+const char *spcmd3[] = {"st", "-n", "gopass", "-g", "100x30", "-e", "gopass", NULL };
+static Sp scratchpads[] = {
+	/* name          cmd  */
+	{"spterm",      spcmd1},
+	{"spranger",    spcmd2},
+	{"gopass",      spcmd3},
+};
+
+
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
@@ -42,6 +57,9 @@ static const Rule rules[] = {
 	{ "Gimp",        NULL,       NULL,       1 << 7,       1,           -1 },
 	{ "Firefox",     NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Thunderbird", NULL,       NULL,       1 << 8,       0,           -1 },
+    { NULL,         "spterm",    NULL,       SPTAG(0),     1,           -1 },
+    { NULL,         "spfm",      NULL,       SPTAG(1),     1,           -1 },
+    { NULL,         "gopass",    NULL,       SPTAG(2),     1,           -1 },
 };
 
 /* layout(s) */
@@ -105,7 +123,7 @@ static const char *volumedowncmd[]  = { "mixer", "vol", "-10", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	/* { MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } }, */
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = emacscmd } },
@@ -188,9 +206,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
+    { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+    { MODKEY|ShiftMask,             XK_y,      togglescratch,  {.ui = 0 } },
+    { MODKEY|ShiftMask,             XK_r,      togglescratch,  {.ui = 1 } },
+    { MODKEY|ShiftMask,             XK_p,      togglescratch,  {.ui = 2 } },
+    TAGKEYS(                        XK_1,                      0)
+    TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
