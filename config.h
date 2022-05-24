@@ -37,7 +37,7 @@ typedef struct {
 const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
 const char *spcmd2[] = {"st", "-n", "spfm", "-g", "120x34", "-e", "ranger", NULL };
 const char *spcmd3[] = {"st", "-n", "spgopass", "-g", "120x34", "-e", "gopass", NULL };
-const char *spcmd4[] = {"st", "-n", "spnotes", "-g", "120x34", "-e", "vim", "/home/rbartl/ownCloud/notes.md", NULL };
+const char *spcmd4[] = {"st", "-n", "spnotes", "-g", "120x34", "-e", "emacs", "-nw", "/home/rbartl/ownCloud/org/notes.org", NULL };
 static Sp scratchpads[] = {
     /* name          cmd  */
     {"spterm",       spcmd1},
@@ -59,6 +59,7 @@ static const Rule rules[] = {
     { "Gimp",         NULL,          NULL,       1 << 7,       1,           -1 },
     { "Firefox",      NULL,          NULL,       1 << 8,       0,           -1 },
     { "Thunderbird",  NULL,          NULL,       1 << 8,       0,           -1 },
+    { "Vlc",          "vlc",         "webcam",   1,            1,           -1 },
     { NULL,           "spterm",      NULL,       SPTAG(0),     1,           -1 },
     { NULL,           "spfm",        NULL,       SPTAG(1),     1,           -1 },
     { NULL,           "spgopass",    NULL,       SPTAG(2),     1,           -1 },
@@ -114,7 +115,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 /* static const char *termcmd[]  = { "st", NULL }; */
-static const char *termcmd[]        = { "st", "-e", "xtmux", NULL };
+static const char *termcmd[]        = { "st", "-e", "tmux", NULL };
 static const char *emacscmd[]       = { "emacs", NULL };
 static const char *browsercmd[]     = { "chrome", NULL };
 static const char *mailcmd[]        = { "thunderbird", NULL };
@@ -224,7 +225,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	/* { MODKEY|ShiftMask,             XK_q,      quit,           {0} }, */
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} },
 };
 
