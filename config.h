@@ -176,14 +176,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_l,      setcfact,       {.f = -0.25} },
 	{ MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
 
-	{ MODKEY|Mod1Mask,              XK_h,      incrgaps,       {.i = +1 } },
-	{ MODKEY|Mod1Mask,              XK_l,      incrgaps,       {.i = -1 } },
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_h,      incrogaps,      {.i = +1 } },
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_l,      incrogaps,      {.i = -1 } },
-	{ MODKEY|Mod1Mask|ControlMask,  XK_h,      incrigaps,      {.i = +1 } },
-	{ MODKEY|Mod1Mask|ControlMask,  XK_l,      incrigaps,      {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
+	/* Modify Gaps */
+	{ MODKEY|Mod1Mask,              XK_h,      incrgaps,       {.i = +5 } },
+	{ MODKEY|Mod1Mask,              XK_l,      incrgaps,       {.i = -5 } },
+	{ MODKEY|Mod1Mask,              XK_0,      defaultgaps,    {0} },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,      togglegaps,     {0} },
 
 
 	{ MODKEY,                       XK_Return, zoom,           {0} },
@@ -210,13 +207,13 @@ static Key keys[] = {
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-    { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-    { MODKEY|ShiftMask,             XK_x,      togglescratch,  {.ui = 0 } },  // term (xterm)
-    { MODKEY|ShiftMask,             XK_o,      togglescratch,  {.ui = 1 } },  // lf (open)
-    { MODKEY|ShiftMask,             XK_p,      togglescratch,  {.ui = 2 } },  // gopass (pass)
-    { MODKEY|ShiftMask,             XK_n,      togglescratch,  {.ui = 3 } },  // notes
-    TAGKEYS(                        XK_1,                      0)
-    TAGKEYS(                        XK_2,                      1)
+	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_x,      togglescratch,  {.ui = 0 } },  // term (xterm)
+	{ MODKEY|ShiftMask,             XK_o,      togglescratch,  {.ui = 1 } },  // lf (open)
+	{ MODKEY|ShiftMask,             XK_p,      togglescratch,  {.ui = 2 } },  // gopass (pass)
+	{ MODKEY|ShiftMask,             XK_n,      togglescratch,  {.ui = 3 } },  // notes
+	TAGKEYS(                        XK_1,                      0)
+	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
