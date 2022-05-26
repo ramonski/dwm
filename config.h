@@ -36,10 +36,10 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {"st", "-n", "spfm", "-g", "120x34", "-e", "ranger", NULL };
+const char *spcmd1[] = {"st", "-n", "spterm",   "-g", "120x34", NULL };
+const char *spcmd2[] = {"st", "-n", "spfm",     "-g", "120x34", "-e", "ranger", NULL };
 const char *spcmd3[] = {"st", "-n", "spgopass", "-g", "120x34", "-e", "gopass", NULL };
-const char *spcmd4[] = {"st", "-n", "spnotes", "-g", "120x34", "-e", "emacs", "-nw", "/home/rbartl/ownCloud/org/notes.org", NULL };
+const char *spcmd4[] = {"st", "-n", "spnotes",  "-g", "120x34", "-e", "emacs", "-nw", "/home/rbartl/ownCloud/org/notes.org", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",       spcmd1},
@@ -87,7 +87,6 @@ static const Layout layouts[] = {
 	{ "[\\]",     dwindle },
 	{ "[H]",      deck },
 	{ "|M|",      centeredmaster },
-
 	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
 	{ "HHH",      grid },
@@ -114,8 +113,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-/* static const char *termcmd[]  = { "st", NULL }; */
+static const char *dmenucmd[]       = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+/* static const char *termcmd[]     = { "st", NULL }; */
 static const char *termcmd[]        = { "st", "-e", "tmux", NULL };
 static const char *emacscmd[]       = { "emacs", NULL };
 static const char *browsercmd[]     = { "chrome", NULL };
@@ -148,12 +147,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Right,  focusstack,     {.i = +1 } },
 
 	/* Set focus to monitor */
-	{ MODKEY|ControlMask,           XK_Left,  focusmon,       {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_Right, focusmon,       {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_Up,    tagmon,         {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_Down,  tagmon,         {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_Left,   focusmon,       {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_Right,  focusmon,       {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_Up,     tagmon,         {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_Down,   tagmon,         {.i = +1 } },
 
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
+	{ MODKEY|ControlMask,           XK_0,      view,           {.ui = ~0 } },
 
 	/* Move windows in stack up/down */
 	{ MODKEY|ShiftMask,             XK_Up,     movestack,      {.i = -1 } },
@@ -200,11 +199,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F6,     spawn,          SHCMD("intel_backlight incr; kill -44 $(pidof dwmblocks)") },
 
 	/* FN-Keys */
-	{ 0, XF86XK_AudioMute,	                   spawn,	        SHCMD("mixer vol 0; kill -39 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioRaiseVolume,              spawn,           SHCMD("mixer vol +10; kill -39 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioLowerVolume,              spawn,           SHCMD("mixer vol -10; kill -39 $(pidof dwmblocks)") },
-	{ 0, XF86XK_MonBrightnessUp,               spawn,           SHCMD("intel_backlight incr; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_MonBrightnessDown,             spawn,           SHCMD("intel_backlight decr; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioMute,	                   spawn,	       SHCMD("mixer vol 0; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,              spawn,          SHCMD("mixer vol +10; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,              spawn,          SHCMD("mixer vol -10; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_MonBrightnessUp,               spawn,          SHCMD("intel_backlight incr; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_MonBrightnessDown,             spawn,          SHCMD("intel_backlight decr; kill -44 $(pidof dwmblocks)") },
 
 	/* Layouts */
 	{ MODKEY|ControlMask,           XK_t,      setlayout,      {.v = &layouts[0]} },  /* tile */
@@ -218,6 +217,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,		    XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 
+	/* Navigate Tags */
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
