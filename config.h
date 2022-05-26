@@ -134,13 +134,15 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = browsercmd } },
 	{ MODKEY|ShiftMask,             XK_m,      spawn,          {.v = mailcmd } },
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("mpv av://v4l2:/dev/video0 --no-osc --no-input-default-bindings --no-cache --profile=low-latency --untimed --no-demuxer-thread --vd-lavc-threads=1 --input-conf=/dev/null --title=webcam ") },
+
+	/* F-KEYS */
 	{ MODKEY,                       XK_F1,     spawn,          SHCMD("mixer vol   0; kill -39 $(pidof dwmblocks)") },
 	{ MODKEY,                       XK_F2,     spawn,          SHCMD("mixer vol -10; kill -39 $(pidof dwmblocks)") },
 	{ MODKEY,                       XK_F3,     spawn,          SHCMD("mixer vol +10; kill -39 $(pidof dwmblocks)") },
 	{ MODKEY,                       XK_F5,     spawn,          SHCMD("intel_backlight decr; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY,                       XK_F6,     spawn,          SHCMD("intel_backlight incr; kill -44 $(pidof dwmblocks)") },
 
-	/* FN Keys */
+	/* FN-Keys */
 	{ 0, XF86XK_AudioMute,	                   spawn,	        SHCMD("mixer vol 0; kill -39 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,              spawn,           SHCMD("mixer vol +10; kill -39 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,              spawn,           SHCMD("mixer vol -10; kill -39 $(pidof dwmblocks)") },
