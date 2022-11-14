@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
@@ -17,19 +17,20 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 #define ICONSIZE 16                             /* icon size */
 #define ICONSPACING 5                           /* space between icon and title */
-static const char *fonts[]          = { "DejaVuSans:size=10", "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true"  };
-static const char dmenufont[]       = "DejaVuSans:size=10";
+static char *fonts[]                = { "monospace:size=10", "NotoColorEmoji:pixelsize=16:antialias=true:autohint=true"  };
+static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char col_red[]         = "#FF0000";
+static const char selected_border[] = "#0d6efd";
 static const char col_green[]       = "#00FF00";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_red  },
+	[SchemeSel]  = { col_gray4, col_cyan,  selected_border  },
 };
 
 typedef struct {
@@ -40,12 +41,14 @@ const char *spcmd1[] = {"st", "-n", "spterm",   "-g", "120x34", NULL };
 const char *spcmd2[] = {"st", "-n", "spfm",     "-g", "120x34", "-e", "ranger", NULL };
 const char *spcmd3[] = {"st", "-n", "spgopass", "-g", "120x34", "-e", "gopass", NULL };
 const char *spcmd4[] = {"st", "-n", "spnotes",  "-g", "120x34", "-e", "emacs", "-nw", "/home/rbartl/ownCloud/org/notes.org", NULL };
+const char *spcmd5[] = {"st", "-n", "spcalc",   "-g", "120x34", "-e", "galculator", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",       spcmd1},
 	{"spfm",         spcmd2},
 	{"spgopass",     spcmd3},
 	{"spnotes",      spcmd4},
+	{"spcalc",       spcmd5},
 };
 
 
@@ -65,6 +68,7 @@ static const Rule rules[] = {
 	{ NULL,           "spfm",        NULL,       SPTAG(1),     1,           -1 },
 	{ NULL,           "spgopass",    NULL,       SPTAG(2),     1,           -1 },
 	{ NULL,           "spnotes",     NULL,       SPTAG(3),     1,           -1 },
+	{ NULL,           "spcalc",      NULL,       SPTAG(4),     1,           -1 },
 };
 
 /* layout(s) */
@@ -100,6 +104,7 @@ static const Layout layouts[] = {
 /* key definitions */
 //#define MODKEY Mod1Mask
 #define MODKEY Mod4Mask
+#define ALTKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -109,26 +114,21 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd ,NULL } }
 
+#define EDITOR "emacs"
+#define TERMINAL "kitty"
 #define STATUSBAR "dwmblocks"
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]       = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-/* static const char *termcmd[]     = { "st", NULL }; */
-static const char *termcmd[]        = { "st", "-e", "tmux", NULL };
-static const char *emacscmd[]       = { "emacs", NULL };
-static const char *browsercmd[]     = { "chrome", NULL };
-static const char *mailcmd[]        = { "thunderbird", NULL };
-static const char *brightupcmd[]    = { "intel_backlight", "incr", NULL };
-static const char *brightdowncmd[]  = { "intel_backlight", "decr", NULL };
-static const char *volumemutecmd[]  = { "mixer", "vol",   "0", NULL };
-static const char *volumeupcmd[]    = { "mixer", "vol", "+10", NULL };
-static const char *volumedowncmd[]  = { "mixer", "vol", "-10", NULL };
+static const char *dmenucmd[]    = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *termcmd[]     = { TERMINAL, NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	/* Global modifiers */
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_p,      spawn,          SHCMD("rofi -show drun") },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("rofi -show window") },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },  /* show/hide top bar */
 	{ MODKEY,                       XK_q,      killclient,     {0} },
@@ -176,34 +176,31 @@ static Key keys[] = {
 
 	/* Launch Applications */
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = emacscmd } },
-	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = browsercmd } },
-	{ MODKEY|ShiftMask,             XK_m,      spawn,          {.v = mailcmd } },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("emacsclient -c 'emacs'") },
+	{ MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("brave") },
+	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("thunderbird") },
+	{ MODKEY|ShiftMask,             XK_f,      spawn,          SHCMD("thunar") },
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("mpv av://v4l2:/dev/video0 --no-osc --no-input-default-bindings --no-cache --profile=low-latency --untimed --no-demuxer-thread --vd-lavc-threads=1 --input-conf=/dev/null --title=webcam ") },
+	{ MODKEY|ShiftMask,             XK_period, spawn,          SHCMD("emacs /home/rbartl/.dwm/dwm/config.h") },
 
 	/* Scratchpads */
-	{ MODKEY|ShiftMask,             XK_x,      togglescratch,  {.ui = 0 } },  // term (xterm)
-	{ MODKEY|ShiftMask,             XK_o,      togglescratch,  {.ui = 1 } },  // lf (open)
-	{ MODKEY|ShiftMask,             XK_p,      togglescratch,  {.ui = 2 } },  // gopass (pass)
-	{ MODKEY|ShiftMask,             XK_n,      togglescratch,  {.ui = 3 } },  // notes
+	{ Mod1Mask|ShiftMask,           XK_Return, togglescratch,  {.ui = 0 } },  // term (xterm)
+	{ Mod1Mask|ShiftMask,           XK_f,      togglescratch,  {.ui = 1 } },  // lf (open)
+	{ Mod1Mask|ShiftMask,           XK_g,      togglescratch,  {.ui = 2 } },  // gopass (pass)
+	{ Mod1Mask|ShiftMask,           XK_n,      togglescratch,  {.ui = 3 } },  // notes
+	{ Mod1Mask|ShiftMask,           XK_c,      togglescratch,  {.ui = 4 } },  // calc
 
 	/* Quit Deskop */
-	/* { MODKEY|ShiftMask,             XK_q,      quit,           {0} }, */
-	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} },
-
-	/* F-KEYS */
-	{ MODKEY,                       XK_F1,     spawn,          SHCMD("mixer vol   0; kill -39 $(pidof dwmblocks)") },
-	{ MODKEY,                       XK_F2,     spawn,          SHCMD("mixer vol -10; kill -39 $(pidof dwmblocks)") },
-	{ MODKEY,                       XK_F3,     spawn,          SHCMD("mixer vol +10; kill -39 $(pidof dwmblocks)") },
-	{ MODKEY,                       XK_F5,     spawn,          SHCMD("intel_backlight decr; kill -44 $(pidof dwmblocks)") },
-	{ MODKEY,                       XK_F6,     spawn,          SHCMD("intel_backlight incr; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask|ShiftMask,   XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_q,      quit,           {1} },
+	{ MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD("cd /home/rbartl/.dwm/dwm && make && sudo make install | xmessage -file -") },
 
 	/* FN-Keys */
-	{ 0, XF86XK_AudioMute,	                   spawn,	       SHCMD("mixer vol 0; kill -39 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioRaiseVolume,              spawn,          SHCMD("mixer vol +10; kill -39 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioLowerVolume,              spawn,          SHCMD("mixer vol -10; kill -39 $(pidof dwmblocks)") },
-	{ 0, XF86XK_MonBrightnessUp,               spawn,          SHCMD("intel_backlight incr; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_MonBrightnessDown,             spawn,          SHCMD("intel_backlight decr; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioMute,	                   spawn,	       SHCMD("amixer set Master toggle 0") },
+	{ 0, XF86XK_AudioRaiseVolume,              spawn,          SHCMD("amixer set Master 10%+") },
+	{ 0, XF86XK_AudioLowerVolume,              spawn,          SHCMD("amixer set Master 10%-") },
+	{ 0, XF86XK_MonBrightnessUp,               spawn,          SHCMD("brightnessctl set +10%") },
+	{ 0, XF86XK_MonBrightnessDown,             spawn,          SHCMD("brightnessctl set 10%-") },
 
 	/* Layouts */
 	{ MODKEY|ControlMask,           XK_t,      setlayout,      {.v = &layouts[0]} },  /* tile */
