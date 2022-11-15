@@ -87,16 +87,16 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
-	{ "[@]",      spiral },
-	{ "[\\]",     dwindle },
+	{ ":::",      gaplessgrid },
 	{ "[H]",      deck },
 	{ "|M|",      centeredmaster },
+	{ "HHH",      grid },
+	{ "[@]",      spiral },
+	{ "[\\]",     dwindle },
 	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
-	{ "HHH",      grid },
 	{ "###",      nrowgrid },
 	{ "---",      horizgrid },
-	{ ":::",      gaplessgrid },
 	{ ">M>",      centeredfloatingmaster },
 	{ NULL,       NULL },
 };
@@ -201,16 +201,15 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioLowerVolume,              spawn,          SHCMD("amixer set Master 10%-") },
 	{ 0, XF86XK_MonBrightnessUp,               spawn,          SHCMD("brightnessctl set +10%") },
 	{ 0, XF86XK_MonBrightnessDown,             spawn,          SHCMD("brightnessctl set 10%-") },
+	{ 0, XF86XK_Display,                       spawn,          SHCMD("arandr") },
 
 	/* Layouts */
 	{ MODKEY|ControlMask,           XK_t,      setlayout,      {.v = &layouts[0]} },  /* tile */
 	{ MODKEY|ControlMask,           XK_f,      setlayout,      {.v = &layouts[1]} },  /* floating */
 	{ MODKEY|ControlMask,           XK_m,      setlayout,      {.v = &layouts[2]} },  /* monocle */
-	{ MODKEY|ControlMask,           XK_s,      setlayout,      {.v = &layouts[3]} },  /* spiral */
-	{ MODKEY|ControlMask,           XK_d,      setlayout,      {.v = &layouts[4]} },  /* dwindle */
+	{ MODKEY|ControlMask,           XK_g,      setlayout,      {.v = &layouts[3]} },  /* grid */
+	{ MODKEY|ControlMask,           XK_d,      setlayout,      {.v = &layouts[4]} },  /* deck */
 	{ MODKEY|ControlMask,           XK_c,      setlayout,      {.v = &layouts[5]} },  /* centered master */
-	/* gapless grid */
-	{ MODKEY|ControlMask,           XK_g,      setlayout,      {.v = &layouts[12]} }, /* grid */
 	{ MODKEY|ControlMask,		    XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 
