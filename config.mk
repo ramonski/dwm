@@ -1,5 +1,5 @@
 # dwm version
-VERSION = 6.3
+VERSION = 6.4
 
 # Customize below to fit your system
 
@@ -25,6 +25,7 @@ FREETYPEINC = /usr/include/freetype2
 #FREETYPEINC = /usr/local/include/freetype2
 # OpenBSD (uncomment)
 #FREETYPEINC = ${X11INC}/freetype2
+#MANPREFIX = ${PREFIX}/man
 
 # includes and libs
 INCS = -I${X11INC} -I${FREETYPEINC}
