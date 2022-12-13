@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-gmake clean && gmake && sudo gmake install
+PWD=$(pwd)
+
+make clean && make && sudo make install

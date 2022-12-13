@@ -3,7 +3,7 @@
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systraypinning = 1;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
@@ -17,20 +17,19 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 #define ICONSIZE 16                             /* icon size */
 #define ICONSPACING 5                           /* space between icon and title */
-static char *fonts[]                = { "monospace:size=10", "NotoColorEmoji:pixelsize=16:antialias=true:autohint=true"  };
-static const char dmenufont[]       = "monospace:size=10";
+static char *fonts[]                = { "DejaVuSans:size=10", "NotoColorEmoji:pixelsize=16:antialias=true:autohint=true"  };
+static const char dmenufont[]       = "DejaVuSans:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char col_red[]         = "#FF0000";
-static const char selected_border[] = "#0d6efd";
 static const char col_green[]       = "#00FF00";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  selected_border  },
+	[SchemeSel]  = { col_gray4, col_cyan,  col_red  },
 };
 
 typedef struct {
@@ -41,14 +40,13 @@ const char *spcmd1[] = {"st", "-n", "spterm",   "-g", "120x34", NULL };
 const char *spcmd2[] = {"st", "-n", "spfm",     "-g", "120x34", "-e", "ranger", NULL };
 const char *spcmd3[] = {"st", "-n", "spgopass", "-g", "120x34", "-e", "gopass", NULL };
 const char *spcmd4[] = {"st", "-n", "spnotes",  "-g", "120x34", "-e", "emacs", "-nw", "/home/rbartl/ownCloud/org/notes.org", NULL };
-const char *spcmd5[] = {"st", "-n", "spcalc",   "-g", "120x34", "-e", "galculator", NULL };
+
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",       spcmd1},
 	{"spfm",         spcmd2},
 	{"spgopass",     spcmd3},
 	{"spnotes",      spcmd4},
-	{"spcalc",       spcmd5},
 };
 
 
@@ -68,7 +66,6 @@ static const Rule rules[] = {
 	{ NULL,           "spfm",        NULL,       SPTAG(1),     1,           -1 },
 	{ NULL,           "spgopass",    NULL,       SPTAG(2),     1,           -1 },
 	{ NULL,           "spnotes",     NULL,       SPTAG(3),     1,           -1 },
-	{ NULL,           "spcalc",      NULL,       SPTAG(4),     1,           -1 },
 };
 
 /* layout(s) */
@@ -115,7 +112,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd ,NULL } }
 
 #define EDITOR "emacs"
-#define TERMINAL "kitty"
+#define TERMINAL "st"
 #define STATUSBAR "dwmblocks"
 
 /* commands */
@@ -182,25 +179,25 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          SHCMD("thunar") },
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("mpv av://v4l2:/dev/video0 --no-osc --no-input-default-bindings --no-cache --profile=low-latency --untimed --no-demuxer-thread --vd-lavc-threads=1 --input-conf=/dev/null --title=webcam ") },
 	{ MODKEY|ShiftMask,             XK_period, spawn,          SHCMD("emacs /home/rbartl/.dwm/dwm/config.h") },
+	{ MODKEY|ShiftMask,             XK_comma,  spawn,          SHCMD("emacs /home/rbartl/.dwm/dwmblocks/config.h") },
 
 	/* Scratchpads */
 	{ Mod1Mask|ShiftMask,           XK_Return, togglescratch,  {.ui = 0 } },  // term (xterm)
-	{ Mod1Mask|ShiftMask,           XK_f,      togglescratch,  {.ui = 1 } },  // lf (open)
+	{ Mod1Mask|ShiftMask,           XK_r,      togglescratch,  {.ui = 1 } },  // ranger
 	{ Mod1Mask|ShiftMask,           XK_g,      togglescratch,  {.ui = 2 } },  // gopass (pass)
 	{ Mod1Mask|ShiftMask,           XK_n,      togglescratch,  {.ui = 3 } },  // notes
-	{ Mod1Mask|ShiftMask,           XK_c,      togglescratch,  {.ui = 4 } },  // calc
 
 	/* Quit Deskop */
-	{ MODKEY|ShiftMask|ShiftMask,   XK_q,      quit,           {0} },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {1} },
 	{ MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD("cd /home/rbartl/.dwm/dwm && make && sudo make install | xmessage -file -") },
 
 	/* FN-Keys */
-	{ 0, XF86XK_AudioMute,	                   spawn,	       SHCMD("amixer set Master toggle 0") },
-	{ 0, XF86XK_AudioRaiseVolume,              spawn,          SHCMD("amixer set Master 10%+") },
-	{ 0, XF86XK_AudioLowerVolume,              spawn,          SHCMD("amixer set Master 10%-") },
-	{ 0, XF86XK_MonBrightnessUp,               spawn,          SHCMD("brightnessctl set +10%") },
-	{ 0, XF86XK_MonBrightnessDown,             spawn,          SHCMD("brightnessctl set 10%-") },
+	{ 0, XF86XK_AudioMute,	                   spawn,	       SHCMD("amixer set Master toggle 0; show-vol") },
+	{ 0, XF86XK_AudioRaiseVolume,              spawn,          SHCMD("amixer set Master 10%+; show-vol") },
+	{ 0, XF86XK_AudioLowerVolume,              spawn,          SHCMD("amixer set Master 10%-; show-vol") },
+	{ 0, XF86XK_MonBrightnessUp,               spawn,          SHCMD("brightnessctl set +5%; pkill -RTMIN+15 dwmblocks") },
+	{ 0, XF86XK_MonBrightnessDown,             spawn,          SHCMD("brightnessctl set 5%-; pkill -RTMIN+15 dwmblocks") },
 	{ 0, XF86XK_Display,                       spawn,          SHCMD("arandr") },
 
 	/* Layouts */
