@@ -155,12 +155,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Up,     movestack,      {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Down,   movestack,      {.i = +1 } },
 
-	/* Increase/decrease width/height of window */
-	{ MODKEY,           /* left  */ XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,           /* right */ XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,           /* down  */ XK_j,      setcfact,       {.f = -0.05} },
-	{ MODKEY,           /* up    */ XK_k,      setcfact,       {.f = +0.05} },
-
 	/* Increase/decrease Gaps */
 	{ MODKEY|ShiftMask, /* left  */ XK_h,      incrgaps,       {.i = +5 } },
 	{ MODKEY|ShiftMask, /* right */ XK_l,      incrgaps,       {.i = -5 } },
@@ -178,8 +172,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("thunderbird") },
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          SHCMD("thunar") },
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("mpv av://v4l2:/dev/video0 --no-osc --no-input-default-bindings --no-cache --profile=low-latency --untimed --no-demuxer-thread --vd-lavc-threads=1 --input-conf=/dev/null --title=webcam ") },
-	{ MODKEY|ShiftMask,             XK_period, spawn,          SHCMD("emacs /home/rbartl/.dwm/dwm/config.h") },
-	{ MODKEY|ShiftMask,             XK_comma,  spawn,          SHCMD("emacs /home/rbartl/.dwm/dwmblocks/config.h") },
+	{ MODKEY|ShiftMask,             XK_period, spawn,          SHCMD("emacs /home/rbartl/.suckless/dwm/config.h") },
+	{ MODKEY|ShiftMask,             XK_comma,  spawn,          SHCMD("emacs /home/rbartl/.suckless/dwmblocks/config.h") },
 
 	/* Scratchpads */
 	{ Mod1Mask|ShiftMask,           XK_Return, togglescratch,  {.ui = 0 } },  // term (xterm)
@@ -190,7 +184,7 @@ static Key keys[] = {
 	/* Quit Deskop */
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {1} },
-	{ MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD("cd /home/rbartl/.dwm/dwm && make && sudo make install | xmessage -file -") },
+	{ MODKEY|ShiftMask,             XK_r,      spawn,          SHCMD("cd /home/rbartl/.suckless/dwm && make && sudo make install | xmessage -file -") },
 
 	/* FN-Keys */
 	{ 0, XF86XK_AudioMute,	                   spawn,	       SHCMD("amixer set Master toggle 0; show-vol") },
@@ -209,6 +203,12 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_c,      setlayout,      {.v = &layouts[5]} },  /* centered master */
 	{ MODKEY|ControlMask,		    XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
+
+	/* Increase/decrease width/height of window */
+	{ MODKEY|ControlMask,           XK_h,      setmfact,       {.f = -0.05} },
+	{ MODKEY|ControlMask,           XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ControlMask,           XK_j,      setcfact,       {.f = -0.05} },
+	{ MODKEY|ControlMask,           XK_k,      setcfact,       {.f = +0.05} },
 
 	/* Navigate Tags */
 	TAGKEYS(                        XK_1,                      0)
